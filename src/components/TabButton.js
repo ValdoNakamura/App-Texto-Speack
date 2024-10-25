@@ -1,10 +1,9 @@
 import { useEffect, useRef } from "react";
-import { StyleSheet, Animated, TouchableOpacity, View } from "react-native";
-import * as Speech from 'expo-speech';
+import { StyleSheet, Animated, TouchableOpacity } from "react-native";
 
 import Icon from "react-native-vector-icons/Ionicons";
 
-export default ({ item, accessibilityState, onPress, thingToSay = ""  }) => {
+export default ({ item, accessibilityState, onPress }) => {
 
     const translate = useRef(new Animated.Value(0)).current;
     const scale = useRef(new Animated.Value(0)).current;
@@ -53,12 +52,8 @@ export default ({ item, accessibilityState, onPress, thingToSay = ""  }) => {
         ]
     }
 
-    const speak = () => {
-        Speech.speak(thingToSay); // Utiliza la prop thingToSay aquí
-    };
-
     return (
-        <TouchableOpacity onPress={()=> {onPress(); speak();}} style={styles.container}>
+        <TouchableOpacity onPress={()=> onPress} style={styles.container}>
             <Animated.View style={[styles.button, translateStyles]}>
                 <Animated.View style={[styles.circuloinvisible, scaleStyles]} />
                 <Icon

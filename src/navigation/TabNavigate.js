@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 
 //Screens
 import HomeScreen from '../screens/HomeScreen';
-import StackNavigation from '../navigation/StackNavigation';
+import StackNavigation from './StackRouteExplorer';
 import CreateRuote from '../screens/CreateRuote';
 
 //componente del boton
@@ -56,7 +56,7 @@ export default function MyTabs() {
                         component={items.Component}
                         options={{
                             tabBarShowLabel: false,
-                            tabBarButton: (props) => <TabButton item={items} thingToSay={items.thingToSay} {...props}/>
+                            tabBarButton: (props) => <TabButton item={items} {...props}/>
                         }}
                         />
                     )
