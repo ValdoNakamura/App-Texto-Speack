@@ -4,7 +4,7 @@ import { StyleSheet } from 'react-native';
 //Screens
 import HomeScreen from '../screens/HomeScreen';
 import StackNavigation from './StackRouteExplorer';
-import CreateRuote from '../screens/CreateRuote';
+import CreateRoute from '../screens/CreateRoute';
 
 //componente del boton
 import TabButton from '../components/TabButton'
@@ -35,7 +35,7 @@ export default function MyTabs() {
             title: 'Agregar Ruta',
             screen: 'Agregar Ruta',
             icon: 'add-outline',
-            Component: CreateRuote,
+            Component: CreateRoute,
             thingToSay: 'Estas En Agregar Ruta'
         }
     ];

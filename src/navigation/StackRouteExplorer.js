@@ -1,30 +1,17 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import RouteExplorer from "../screens/RouteExplorer";
-
-
 import Roads from '../screens/Roads'
 
-const StackRoads = createNativeStackNavigator()
+const RouteStack = createNativeStackNavigator()
 
 export default function StackNavigation() {
     return (
-        <StackRoads.Navigator
+        <RouteStack.Navigator
             initialRouteName="Explorador De Rutas"
+            screenOptions={{ headerShown: false }}
         >
-            <StackRoads.Screen
-                name='Page Roads'
-                component={RouteExplorer}
-                options={{
-                    headerShown: false
-                }}
-            />
-            <StackRoads.Screen
-                name="Roads"
-                component={Roads}
-                options={{
-                    headerShown: false
-                }}
-            />
-        </StackRoads.Navigator>
+            <RouteStack.Screen name='RouteExplorer' component={RouteExplorer} />
+            <RouteStack.Screen name="Roads" component={Roads} />
+        </RouteStack.Navigator>
     )
 }

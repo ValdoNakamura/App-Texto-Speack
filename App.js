@@ -1,8 +1,6 @@
 import React from 'react';
-import Navigation from './src/navigation/Navigation';
+import RootNavigation from './src/navigation/RootNavigation';
 
 export default function App() {
-  return (
-    <Navigation/>
-  );
+  return <RootNavigation/>
 }

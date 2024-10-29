@@ -2,7 +2,7 @@ import { StyleSheet, View } from 'react-native';
 import Boton from '../components/Boton';
 
 
-export default function BotonCrear() {
+export default function CreateRoute() {
     return (
         <View style={styles.main}>
             <Boton title='Crear Ruta'/>

@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { StyleSheet, Animated, TouchableOpacity } from "react-native";
+import { StyleSheet, Animated, Pressable } from "react-native";
 
 import Icon from "react-native-vector-icons/Ionicons";
 
@@ -9,10 +9,6 @@ export default ({ item, accessibilityState, onPress }) => {
     const scale = useRef(new Animated.Value(0)).current;
 
     useEffect(() => {
-        handleAnimated();
-    }, [accessibilityState.selected]);
-
-    const handleAnimated = () => {
         Animated.parallel([
             Animated.timing(translate, {
                 toValue: accessibilityState.selected ? 1 : 0,
@@ -25,7 +21,7 @@ export default ({ item, accessibilityState, onPress }) => {
                 useNativeDriver: true,
             }),
         ]).start();
-    };
+    }, [accessibilityState.selected]);
 
     const translateStyles = {
         transform: [
@@ -53,7 +49,7 @@ export default ({ item, accessibilityState, onPress }) => {
     }
 
     return (
-        <TouchableOpacity onPress={()=> onPress} style={styles.container}>
+        <Pressable onPress={()=> onPress(item.screen) } style={styles.container}>
             <Animated.View style={[styles.button, translateStyles]}>
                 <Animated.View style={[styles.circuloinvisible, scaleStyles]} />
                 <Icon
@@ -62,7 +58,7 @@ export default ({ item, accessibilityState, onPress }) => {
                     color={accessibilityState.selected ? "#fff" : "#72000E"}
                 />
             </Animated.View>
-        </TouchableOpacity>
+        </Pressable>
     );
 };
 
@@ -90,5 +86,12 @@ const styles = StyleSheet.create({
         borderRadius: 100,
         position: 'absolute',
         backgroundColor: '#72000E'
+    },
+    translate: {
+        transform: [{ translateY: -30 }]
+    },
+    scale: {
+        opacity: 1,
+        transform: [{ scale: 1 }]
     }
 });

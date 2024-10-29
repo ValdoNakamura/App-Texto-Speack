@@ -6,7 +6,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import MyTabs from './TabNavigate'; //Nav Inferior
 
 
-export default function Navigation() {
+export default function RootNavigation() {
     return (
         <NavigationContainer>
             <MyTabs/>
