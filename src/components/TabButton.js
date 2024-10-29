@@ -28,7 +28,7 @@ export default ({ item, accessibilityState, onPress }) => {
             {
                 translateY: translate.interpolate({
                     inputRange: [0, 1],
-                    outputRange: [0, -30],
+                    outputRange: [0, 30],
                     extrapolate: "clamp",
                 })
             }
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         height: 70,
-        alignSelf: "stretch",
+        alignSelf: "stretch" 
     },
     button: {
         width: 50,

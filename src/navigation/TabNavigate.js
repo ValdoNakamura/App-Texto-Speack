@@ -11,17 +11,9 @@ import TabButton from '../components/TabButton'
 
 const Tab = createBottomTabNavigator();
 
-export default function MyTabs() {
+export default function TabNavigate() {
 
     const tabs = [ //Aqui podemos poner mas pantallas para el tab inferior
-        {
-            id: 1,
-            title: 'Home',
-            screen: 'Home',
-            icon: 'home',
-            Component: HomeScreen,
-            thingToSay: 'Estas En Home'
-        },
         {
             id: 2,
             title: 'Tus Rutas',
@@ -30,6 +22,15 @@ export default function MyTabs() {
             Component: StackNavigation,
             thingToSay: 'Estas En Explorador De Rutas'
         },
+        {
+            id: 1,
+            title: 'Home',
+            screen: 'Home',
+            icon: 'home',
+            Component: HomeScreen,
+            thingToSay: 'Estas En Home'
+        },
+        
         {
             id: 3,
             title: 'Agregar Ruta',
@@ -72,6 +73,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderWidth: 0.5,
-        borderColor: 'yellow'
+        borderColor: '#fff',
+        top: 100,
+        borderRadius: 100,
+        marginLeft: 10,
+        marginRight: 10
     }
 })

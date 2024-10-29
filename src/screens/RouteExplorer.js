@@ -33,27 +33,5 @@ const styles = StyleSheet.create({
         fontSize: 26,
         color: '#fff',
         fontWeight: 'bold'
-    },
-    decoracion: {
-        position: 'absolute',
-        width: 250,
-        height: 250,
-        top: -100,
-        right: -100,
-        borderRadius: 200,
-        zIndex: -1,
-        backgroundColor: '#72000E',
-        opacity: 0.7,
-    },
-    decoracion2: {
-        position: 'absolute',
-        width: 250,
-        height: 250,
-        bottom: -100,
-        left: -100,
-        borderRadius: 200,
-        zIndex: -1,
-        backgroundColor: '#72000E',
-        opacity: 0.7,
     }
 })
