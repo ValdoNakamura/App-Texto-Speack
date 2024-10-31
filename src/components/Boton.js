@@ -1,8 +1,9 @@
 import { Text, View, TouchableOpacity, StyleSheet, Pressable } from 'react-native';
 import { useState } from 'react';
 import Icon from "react-native-vector-icons/Ionicons";
+import { styles } from '../styles';
 
-export default function Boton({ title = 'None', icon=null,  onPress = () => {}, style = styles.btnGrande, styleText = styles.textoBtn }) {
+export default function Boton({ title=null, icon=null,  onPress = () => {} }) {
 
     const [pressed, setPressed] = useState(false);
 
@@ -12,41 +13,21 @@ export default function Boton({ title = 'None', icon=null,  onPress = () => {}, 
                 onPressIn={() => setPressed(true)}
                 onPressOut={() => setPressed(false)}
                 style={({ pressed }) => [
-                    style,
-                    { opacity: pressed ? 0.6 : 1.0 }    // Cambia la opacidad dependiendo del estado
+                    styles.btnGrande,
+                    { opacity: pressed ? 0.6 : 1.0 }   
                 ]}
                 onPress={onPress}
                 >
-                <Icon
+                {
+                    icon && (
+                        <Icon
                     name={icon}
                     size={80}
                     color="#fff"
                 />
-            <Text style={styleText}>{title}</Text>
+                )}
+                <Text style={styles.textoBtn}>{title}</Text>
             </Pressable>
         </View>
     )
 }
-
-const styles = StyleSheet.create({
-    main: {
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    btnGrande: {
-        width: 360,
-        height: 500,
-        marginBottom: 20,
-        borderRadius: 45,
-        backgroundColor: '#87ceeb',
-        justifyContent: 'center',
-        alignItems: 'center',
-        zIndex: 2
-    },
-    textoBtn: {
-        fontSize: 26,
-        color: '#fff',
-        fontWeight: 'bold',
-        marginTop: 10
-    }
-})

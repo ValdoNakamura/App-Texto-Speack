@@ -1,15 +1,11 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
-//Screens
-import MyTabs from './TabNavigate'; //Nav Inferior
-
+import TabNavigate from './TabNavigate';
 
 export default function RootNavigation() {
     return (
         <NavigationContainer>
-            <MyTabs/>
+            <TabNavigate />
         </NavigationContainer>
     );
 }

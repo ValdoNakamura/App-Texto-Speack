@@ -1,15 +1,21 @@
 import { View, StyleSheet, Button } from 'react-native';
-import * as Speech from 'expo-speech';
-import { useEffect } from 'react';
+import { useState } from 'react';
 import Boton from "../components/Boton"
+import * as Speech from 'expo-speech';
+
 
 export default function HomeScreen() {
+    const [text, setText] = useState('');
 
+    const speak = () => {
+        const thingToSay = 'Estas en la seccion principal';
+        Speech.speak(thingToSay);
+      };
 
     return (
         <View style={styles.container}>
-            <Boton title='Modo Lectura' icon='mic-outline'/>
-            <Boton title='Modo Lenguaje' style={styles.btnDescription} styleText={styles.btnText}/>
+            <Boton title='Modo Lectura' icon='mic-outline' onPress={speak}/>
+
         </View>
     );
 }
@@ -18,22 +24,9 @@ const styles = StyleSheet.create({
     container: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: '#ecf0f1',
+    backgroundColor: '#1E2022',
     padding: 8,
     alignItems: 'center'
     },
-    btnDescription: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#ccc',
-        position: 'absolute',
-        top: 0,
-        width: 600,
-        height: 100,
-    },
-    btnText: {
-        fontSize: 26,
-        color: '#fff',
-        fontWeight: 'bold',
-    }
+
 });

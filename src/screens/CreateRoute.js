@@ -1,6 +1,6 @@
 import { StyleSheet, View } from 'react-native';
 import Boton from '../components/Boton';
-
+import { styles } from '../styles';
 
 export default function CreateRoute() {
     return (
@@ -9,11 +9,3 @@ export default function CreateRoute() {
         </View>
     )
 }
-
-const styles = StyleSheet.create({
-    main: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
-    }
-})

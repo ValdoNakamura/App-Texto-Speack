@@ -55,7 +55,7 @@ export default ({ item, accessibilityState, onPress }) => {
                 <Icon
                     name={item.icon}
                     size={30}
-                    color={accessibilityState.selected ? "#fff" : "#72000E"}
+                    color={accessibilityState.selected ? "#fff" : "#1E2022"}
                 />
             </Animated.View>
         </Pressable>
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        height: 70,
+        height: 145,
         alignSelf: "stretch" 
     },
     button: {
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
         height: 50,
         borderRadius: 100,
         position: 'absolute',
-        backgroundColor: '#72000E'
+        backgroundColor: '#1E2022'
     },
     translate: {
         transform: [{ translateY: -30 }]

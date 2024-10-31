@@ -8,8 +8,6 @@ export default function RouteExplorer() {
     return (
         <View style={styles.main}>
             <Boton title='Explorar Caminos' onPress={()=> navigation.navigate("Roads")}/>
-            <View style={styles.decoracion}/>
-            <View style={styles.decoracion2}/>
         </View>
     )
 }
@@ -18,7 +16,8 @@ const styles = StyleSheet.create({
     main: {
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        backgroundColor: '#1E2022'
     },
     btnGrande: {
         width: 200,
