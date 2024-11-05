@@ -1,13 +1,12 @@
 import { View, StyleSheet } from 'react-native';
-import Boton from '../components/Boton';
-import { useNavigation } from '@react-navigation/native';
+import Boton from '../../components/Boton';
 
 
-export default function RouteExplorer() {
-    const navigation = useNavigation()
+
+export default function RouteExplorer(props) {
     return (
         <View style={styles.main}>
-            <Boton title='Explorar Caminos' onPress={()=> navigation.navigate("Roads")}/>
+            <Boton title='Explorar Caminos' onPress={()=> props.navigation.navigate("Roads")}/>
         </View>
     )
 }

@@ -1,58 +1,60 @@
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { StyleSheet } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { StyleSheet } from 'react-native';
 
-//Screens
+// Screens
 import HomeScreen from '../screens/HomeScreen';
-import StackNavigation from './StackRouteExplorer';
-import CreateRoute from '../screens/CreateRoute';
+import StackRouteExplorer from './routes/StackRouteExplorer';
+import StackCreateRoute from '../navigation/createroutes/StackCreateRoutes';
 
-//componente del boton
-import TabButton from '../components/TabButton'
 
-const Tab = createMaterialTopTabNavigator();
+import TabButton from '../components/TabButton';
+
+const Material = createMaterialTopTabNavigator();
 
 export default function TabNavigate() {
 
     const tabs = [
         { id: 1, title: 'Home', screen: 'Home', icon: 'home', Component: HomeScreen },
-        { id: 2, title: 'Tus Rutas', screen: 'Explorador De Rutas', icon: 'footsteps', Component: StackNavigation },
-        { id: 3, title: 'Agregar Ruta', screen: 'Agregar Ruta', icon: 'add-outline', Component: CreateRoute },
+        { id: 2, title: 'Tus Rutas', screen: 'Explorador De Rutas', icon: 'footsteps', Component: StackRouteExplorer },
+        { id: 3, title: 'Agregar Ruta', screen: 'Agregar Ruta', icon: 'add-outline', Component: StackCreateRoute },
     ];
 
     return (
-            <Tab.Navigator
-                initialRouteName={'Home'}
-                screenOptions={{
-                    headerShown: false,
-                    tabBarStyle: styles.TabBar
-                }}
-            >
-                {
-                    tabs.map ((items) =>
-                        <Tab.Screen
-                        key={items.id}
-                        name={items.screen}
-                        component={items.Component}
-                        options={{
-                            tabBarShowLabel: false,
-                            tabBarButton: (props) => <TabButton item={items} {...props}/>
-                        }}
-                        />
-                    )
-                }
-            </Tab.Navigator>
+        <Material.Navigator
+            initialRouteName={'Home'}
+            screenOptions={{
+                tabBarStyle: styles.TabBar,
+                tabBarIndicatorStyle: { backgroundColor: '#fff' },
+                tabBarItemStyle: { height: 140}
+            }}
+        >
+            {tabs.map((item) => (
+                <Material.Screen
+                    key={item.id}
+                    name={item.screen}
+                    component={item.Component}
+                    options={{
+                        tabBarLabel: '',
+                        tabBarIcon: ({ focused }) => (
+                            <TabButton
+                                item={item}
+                                accessibilityState={{ selected: focused }}
+                                onPress={() => navigation.navigate(item.screen)}
+                            />
+                        ),
+                    }}
+                />
+            ))}
+        </Material.Navigator>
+
     );
 }
 
 const styles = StyleSheet.create({
     TabBar: {
-        height: 110,
-        position: 'relative',
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderWidth: 0.5,
-        borderColor: '#fff',
-        top: 0
+        height: 125,
+        backgroundColor: '#f8f8f8',
+        borderBottomWidth: 0.5,
+        borderColor: '#ddd',
     }
-})
+});

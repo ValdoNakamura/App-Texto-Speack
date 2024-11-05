@@ -1,10 +1,9 @@
 import { useEffect, useRef } from "react";
 import { StyleSheet, Animated, Pressable } from "react-native";
-
 import Icon from "react-native-vector-icons/Ionicons";
+import * as Speech from "expo-speech";
 
-export default ({ item, accessibilityState, onPress }) => {
-
+export default function TabButton({ item, accessibilityState, onPress, thingToSay = "" }) {
     const translate = useRef(new Animated.Value(0)).current;
     const scale = useRef(new Animated.Value(0)).current;
 
@@ -28,7 +27,7 @@ export default ({ item, accessibilityState, onPress }) => {
             {
                 translateY: translate.interpolate({
                     inputRange: [0, 1],
-                    outputRange: [0, 30],
+                    outputRange: [0, 20],
                     extrapolate: "clamp",
                 })
             }
@@ -37,45 +36,35 @@ export default ({ item, accessibilityState, onPress }) => {
 
     const scaleStyles = {
         opacity: scale.interpolate({
-            inputRange: [.5, 1],
-            outputRange: [.5, 1],
-            extrapolate: 'clamp'
+            inputRange: [0.5, 1],
+            outputRange: [0.5, 1],
+            extrapolate: "clamp"
         }),
         transform: [
             {
                 scale: scale
             }
         ]
-    }
+    };
 
     return (
-        <Pressable onPress={()=> onPress(item.screen) } style={styles.container}>
-            <Animated.View style={[styles.button, translateStyles]}>
-                <Animated.View style={[styles.circuloinvisible, scaleStyles]} />
-                <Icon
-                    name={item.icon}
-                    size={30}
-                    color={accessibilityState.selected ? "#fff" : "#1E2022"}
-                />
-            </Animated.View>
-        </Pressable>
+        <Animated.View style={[styles.button, translateStyles]}>
+            <Animated.View style={[styles.circuloinvisible, scaleStyles]} />
+            <Icon
+                name={item.icon}
+                size={30}
+                color={accessibilityState.selected ? "#fff" : "#1E2022"}
+            />
+        </Animated.View>
     );
-};
+}
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        height: 145,
-        alignSelf: "stretch" 
-    },
     button: {
         width: 50,
         height: 50,
         borderRadius: 25,
-        borderWidth: 4,
-        borderColor: "#fff",
+        
         justifyContent: "center",
         alignItems: "center",
         overflow: "hidden",
@@ -84,14 +73,7 @@ const styles = StyleSheet.create({
         width: 50,
         height: 50,
         borderRadius: 100,
-        position: 'absolute',
-        backgroundColor: '#1E2022'
-    },
-    translate: {
-        transform: [{ translateY: -30 }]
-    },
-    scale: {
-        opacity: 1,
-        transform: [{ scale: 1 }]
+        position: "absolute",
+        backgroundColor: "#1E2022",
     }
 });
