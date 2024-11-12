@@ -1,11 +1,17 @@
-import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import TabNavigate from './TabNavigate';
+import { AuthProvider } from '../../data/AuthContext';
+
+import MainNav from './main/MainNav';
+
 
 export default function RootNavigation() {
+    
+
     return (
-        <NavigationContainer>
-            <TabNavigate />
-        </NavigationContainer>
+        <AuthProvider>
+            <NavigationContainer>
+                <MainNav/>
+            </NavigationContainer>
+        </AuthProvider>
     );
 }

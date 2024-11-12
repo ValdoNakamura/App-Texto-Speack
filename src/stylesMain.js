@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-export const styles = StyleSheet.create({
+export const stylesMain = StyleSheet.create({
     main: {
         flex: 1,
         justifyContent: 'center',

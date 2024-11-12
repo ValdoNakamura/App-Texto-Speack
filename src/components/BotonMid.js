@@ -1,9 +1,9 @@
 import { Text, View, TouchableOpacity, StyleSheet, Pressable } from 'react-native';
 import { useState } from 'react';
 import Icon from "react-native-vector-icons/Ionicons";
-import { stylesMain } from '../stylesMain';
+import { stylesMain } from '../stylesMain.js';
 
-export default function Boton({ title=null, icon=null, style=stylesMain.btnGrande, onPress = () => {} }) {
+export default function Boton({ title=null, icon=null, style, styleText, onPress = () => {} }) {
 
     const [pressed, setPressed] = useState(false);
 
@@ -26,7 +26,7 @@ export default function Boton({ title=null, icon=null, style=stylesMain.btnGrand
                     color="#fff"
                 />
                 )}
-                <Text style={stylesMain.textoBtn}>{title}</Text>
+                <Text style={styleText}>{title}</Text>
             </Pressable>
         </View>
     )

@@ -1,21 +1,24 @@
-import { View, StyleSheet } from 'react-native';
+import { Text, Pressable, SafeAreaView, StyleSheet } from 'react-native';
 import { useEffect, useState } from 'react';
-import Boton from "../components/Boton";
+import Boton from '../components/Boton';
 import * as Speech from 'expo-speech';
-import { getFirestore, doc, getDoc } from 'firebase/firestore';
+import { doc, getDoc } from 'firebase/firestore';
+import { useAuth } from '../../data/AuthContext';
 
-import appFirebase from '../../data/FirebaseConfig';
+import { FireBase_DB } from '../../data/FirebaseConfig'
 
-const db = getFirestore(appFirebase);
 
-export default function HomeScreen() {
+export default function HomeScreen(props) {
     const [text, setText] = useState('');
+    const [pressed, setPressed] = useState(false);
+    const { logout } = useAuth();
+
 
     useEffect(() => {
         const getTextFromFirestore = async () => {
             try {
                 
-                const docRef = doc(db, 'image-text', 'DF9Y6jZM0Gl5kQUp9tBU');
+                const docRef = doc(FireBase_DB, 'image-text', 'DF9Y6jZM0Gl5kQUp9tBU');
                 const docSnap = await getDoc(docRef);
 
                 if (docSnap.exists()) {
@@ -37,10 +40,9 @@ export default function HomeScreen() {
                 language: 'es-MX',
                 pitch: 1.0,
                 rate: 0.75
-                
             });
         } else {
-            Speech.speak('No Hay Texto disponible para Leer', {
+            Speech.speak('No Hay Texto disponible para Leer o la imagen no es legible', {
                 language: 'es-MX',
                 pitch: 1.0,
                 rate: 0.75
@@ -48,10 +50,26 @@ export default function HomeScreen() {
         }
     };
 
+    const CerrarSesion = () => {
+        logout();
+    };
+
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             <Boton title='Modo Lectura' icon='mic-outline' onPress={speak} />
-        </View>
+            <Pressable
+                title='cerrarsesion'
+                style={({ pressed }) => [
+                    styles.btnCerrar,
+                    { opacity: pressed ? 0.6 : 1.0 }   
+                ]}
+                onPress={CerrarSesion}
+                onPressIn={() => setPressed(true)}
+                onPressOut={() => setPressed(false)}
+            >
+                <Text style={styles.textCerrarSesion}>Cerrar Sesion</Text>
+            </Pressable>
+        </SafeAreaView>
     );
 }
 
@@ -63,4 +81,18 @@ const styles = StyleSheet.create({
         padding: 8,
         alignItems: 'center'
     },
+    btnCerrar: {
+        position: 'absolute',
+        width: 100,
+        height: 100,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 50,
+        left: 0,
+        bottom: 0,
+        backgroundColor: '#fff'
+    },
+    textCerrarSesion: {
+        fontSize: 20,
+    }
 });

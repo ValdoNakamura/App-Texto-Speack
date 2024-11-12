@@ -1,23 +1,21 @@
-import { View, Text, ScrollView, Pressable } from "react-native"
+import { View, Text, ScrollView, Pressable, Dimensions } from "react-native"
 import { StyleSheet } from "react-native"
 import ButtomReturn from '../../components/ButtonBottom'
-
-import appFirebase from '../../../data/FirebaseConfig';
-import { collection, getDocs, getFirestore } from "firebase/firestore";
+import { FireBase_DB } from '../../../data/FirebaseConfig'
+import { collection, getDocs } from "firebase/firestore";
 import { useState, useEffect } from "react";
 
-const db = getFirestore(appFirebase)
 
 
 export default function Roads(props) {
 
-    //forma para trar informacion desde firebase
+    //forma para traer informacion desde firebase
     const [lista, setLista] = useState([])
 
     useEffect(()=>{
         const getLista =  async()=>{
             try {
-                const querySnapshot = await getDocs(collection(db, 'routes-list'))
+                const querySnapshot = await getDocs(collection(FireBase_DB, 'usuarios', '1Rf7KYV0jvN8CAfzZIEF', 'Rutas'))
                 const docs = []
 
                 querySnapshot.forEach((doc)=>{
@@ -37,21 +35,20 @@ export default function Roads(props) {
         getLista();
     },[])
 
-
     return (
         <View style={styles.container}>
-            <Text style={styles.titleRoutes}>Aqui estan todas tus rutas</Text>
+            <View style={styles.containerText}>
+                <Text style={styles.titleRoutes}>Aqui estan todas tus rutas</Text>
+            </View>
             <ScrollView style={styles.containerScroll}>
-                <View>
-                    {
-                        lista.map((list)=>(
-                            <Pressable key={list.id} style={styles.cardRoutes}>
-                                <Text style={styles.RoutesName}>{list.nombre}</Text>
-                                <Text style={styles.RoutesName}>{list.inicio} - {list.fin} </Text>
-                            </Pressable>
-                        ))
-                    }
-                </View>
+                {
+                    lista.map((list)=>(
+                        <Pressable key={list.id} style={styles.cardRoutes}>
+                            <Text style={styles.RoutesName}>{list.nombre}</Text>
+                            <Text style={styles.RoutesName}>{list.inicio} - {list.fin} </Text>
+                        </Pressable>
+                    ))
+                }
             </ScrollView>
             <ButtomReturn title="Regresar" onPress={() => props.navigation.navigate("RouteExplorer")}/>
         </View>
@@ -61,29 +58,34 @@ export default function Roads(props) {
 const  styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#1E2022',
+        backgroundColor: '#fff',
+    },
+    containerText: {
+        paddingTop: 40,
+        paddingBottom: 15,
+        ustifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#fff'
     },
     titleRoutes: {
-        color: 'white',
-        textAlign: 'center',
-        fontSize: 20,
-        marginVertical: 10
+        fontSize: 20
     },
     containerScroll: {
-        height: 10,
-        width: 350,
+        width: Dimensions.get('window').width,
+        height:30,
         padding: 10,
-        marginHorizontal: 5,
         borderRadius: 10,
         backgroundColor: 'red'
     },
     cardRoutes: {
-        width: 350,
-        height: 60,
+        width: 330,
+        height: 100,
+        padding: 10,
         backgroundColor: 'white',
-        marginBottom: 10
+        marginBottom: 10,
+        borderRadius: 25
     },
     RoutesName: {
-
+        fontSize: 20,
     }
 })
