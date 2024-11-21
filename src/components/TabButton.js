@@ -1,26 +1,27 @@
 import { useEffect, useRef } from "react";
-import { StyleSheet, Animated, Pressable } from "react-native";
+import { StyleSheet, Animated } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
-import * as Speech from "expo-speech";
 
-export default function TabButton({ item, accessibilityState, onPress, thingToSay = "" }) {
+export default function TabButton({ item, accessibilityState, onPress }) {
     const translate = useRef(new Animated.Value(0)).current;
     const scale = useRef(new Animated.Value(0)).current;
+
+    const selected = accessibilityState ? accessibilityState.selected : false;
 
     useEffect(() => {
         Animated.parallel([
             Animated.timing(translate, {
-                toValue: accessibilityState.selected ? 1 : 0,
+                toValue: selected ? 1 : 0,
                 duration: 400,
                 useNativeDriver: true,
             }),
             Animated.timing(scale, {
-                toValue: accessibilityState.selected ? 1 : 0,
+                toValue: selected ? 1 : 0,
                 duration: 250,
                 useNativeDriver: true,
             }),
         ]).start();
-    }, [accessibilityState.selected]);
+    }, [selected]);
 
     const translateStyles = {
         transform: [
@@ -48,12 +49,12 @@ export default function TabButton({ item, accessibilityState, onPress, thingToSa
     };
 
     return (
-        <Animated.View style={[styles.button, translateStyles]}>
+        <Animated.View style={[styles.button, translateStyles]} onPress={onPress}>
             <Animated.View style={[styles.circuloinvisible, scaleStyles]} />
             <Icon
                 name={item.icon}
                 size={30}
-                color={accessibilityState.selected ? "#fff" : "#1E2022"}
+                color={selected ? "#fff" : "#1E2022"}
             />
         </Animated.View>
     );
@@ -64,7 +65,6 @@ const styles = StyleSheet.create({
         width: 50,
         height: 50,
         borderRadius: 25,
-        
         justifyContent: "center",
         alignItems: "center",
         overflow: "hidden",

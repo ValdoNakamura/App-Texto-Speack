@@ -5,12 +5,13 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [user, setUser] = useState(null);
     const auth = getAuth();
 
-    // Verifica el estado de autenticación en tiempo real
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (user) => {
-            setIsAuthenticated(!!user);
+        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+            setIsAuthenticated(!!currentUser);
+            setUser(currentUser);
         });
 
         return () => unsubscribe();
@@ -20,14 +21,14 @@ export const AuthProvider = ({ children }) => {
         try {
             await signOut(auth);
             setIsAuthenticated(false);
+            setUser(null);
         } catch (error) {
             console.log("Error al cerrar sesión:", error);
         }
     };
 
-
     return (
-        <AuthContext.Provider value={{ isAuthenticated, logout }}>
+        <AuthContext.Provider value={{ isAuthenticated, user, logout }}>
             {children}
         </AuthContext.Provider>
     );

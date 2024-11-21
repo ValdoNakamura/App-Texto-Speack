@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { View, TextInput, StyleSheet, ActivityIndicator, Text, Pressable } from 'react-native';
-import { FireBase_Auth } from '../../data/FirebaseConfig';
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
+import { FireBase_Auth, FireBase_DB } from '../../data/FirebaseConfig';
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
 import { useNavigation } from '@react-navigation/native';
-import { useAuth } from '../../data/AuthContext';
 
 export default function Login() {
     const [email, setEmail] = useState('');
@@ -14,36 +13,66 @@ export default function Login() {
     const auth = FireBase_Auth;
 
     const singIn = async () => {
+        if (!email.trim() || !password.trim()) {
+            alert('Por favor, llena ambos campos.');
+            return;
+        }
+    
         setLoading(true);
         setErrorMessage('');
         try {
             const response = await signInWithEmailAndPassword(auth, email, password);
-            console.log(response);
+            const user = response.user;
+    
+
+            if (!user.emailVerified) {
+                alert(
+                    'Tu correo no ha sido verificado. Por favor, revisa tu bandeja de entrada.'
+                );
+                await sendEmailVerification(user);
+                return;
+            }
+    
             alert('Inicio de sesión exitoso');
-            navigation.replace('inicio');
         } catch (error) {
             console.log(error.message);
             setErrorMessage('Inicio de sesión fallido: ' + error.message);
         } finally {
             setLoading(false);
         }
-    };
+    };    
 
-    const singUp = async () => {
-        setLoading(true);
-        setErrorMessage('');
-        try {
-            const response = await createUserWithEmailAndPassword(auth, email, password);
-            console.log(response);
-            alert('Cuenta creada con éxito');
-            navigation.replace('inicio');
-        } catch (error) {
-            console.log(error);
-            setErrorMessage('Registro fallido: ' + error.message);
-        } finally {
-            setLoading(false);
-        }
-    };
+const singUp = async () => {
+    if (!email.trim() || !password.trim()) {
+        alert('Por favor, llena ambos campos.');
+        return;
+    }
+
+    setLoading(true);
+    setErrorMessage('');
+    try {
+        const response = await createUserWithEmailAndPassword(auth, email, password);
+        const user = response.user;
+
+        await sendEmailVerification(user);
+        alert(
+            'Cuenta creada con éxito. Por favor, verifica tu correo antes de iniciar sesión.'
+        );
+
+        const uid = user.uid;
+        await setDoc(doc(FireBase_DB, 'usuarios', uid), {
+            email: email,
+            createdAt: new Date().toISOString(),
+        });
+
+        navigation.replace('inicio');
+    } catch (error) {
+        console.log(error);
+        setErrorMessage('Registro fallido: ' + error.message);
+    } finally {
+        setLoading(false);
+    }
+};
 
     return (
         <View style={styles.container}>
@@ -77,8 +106,6 @@ export default function Login() {
         </View>
     );
 }
-//<Button title='Login' onPress={singIn} />
-//<Button title='Create Account' onPress={singUp} />
 
 const styles = StyleSheet.create({
     container: {

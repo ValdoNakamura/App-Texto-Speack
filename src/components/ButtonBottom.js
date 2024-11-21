@@ -1,4 +1,4 @@
-import { Pressable, Text, View, StyleSheet, Dimensions } from 'react-native'
+import { Pressable, Text, View, StyleSheet } from 'react-native'
 import { useState } from 'react'
 
 export default function ButtomBottom({ title=null, onPress = () => {} }) {
@@ -26,15 +26,15 @@ export default function ButtomBottom({ title=null, onPress = () => {} }) {
 const styles = StyleSheet.create({
     containerReturn: {
         position: 'absolute',
-        width: Dimensions.get('window').width,
+        width: '100%',
         height: 100,
         bottom: 0,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'red'
+        backgroundColor: '#1E2022'
     },
     btnReturn: {
-        width: Dimensions.get('window').width - 10,
+        width: '100%',
         height: 90,
         justifyContent: 'center',
         alignItems: 'center',
@@ -44,5 +44,6 @@ const styles = StyleSheet.create({
     txtReturn: {
         color: 'white',
         fontSize: 20,
+        fontWeight: 'bold'
     }
 })

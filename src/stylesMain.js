@@ -19,7 +19,10 @@ export const stylesMain = StyleSheet.create({
     textoBtn: {
         fontSize: 26,
         color: '#fff',
-        fontWeight: 'bold',
-        marginTop: 10
+        fontWeight: 'bold'
+    },
+    title: {
+        fontSize: 25,
+        fontWeight: 'bold'
     }
 });
