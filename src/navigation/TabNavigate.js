@@ -56,7 +56,6 @@ export default function TabNavigate({ navigation }) {
                             <TabButton
                                 item={item}
                                 accessibilityState={{ selected: focused }}
-                                onPress={() => navigation.navigate(item.screen)}
                             />
                         ),
                     }}

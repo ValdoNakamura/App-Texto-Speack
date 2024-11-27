@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import { StyleSheet, Animated } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 
-export default function TabButton({ item, accessibilityState, onPress }) {
+export default function TabButton({ item, accessibilityState }) {
     const translate = useRef(new Animated.Value(0)).current;
     const scale = useRef(new Animated.Value(0)).current;
 
@@ -49,7 +49,7 @@ export default function TabButton({ item, accessibilityState, onPress }) {
     };
 
     return (
-        <Animated.View style={[styles.button, translateStyles]} onPress={onPress}>
+        <Animated.View style={[styles.button, translateStyles]}>
             <Animated.View style={[styles.circuloinvisible, scaleStyles]} />
             <Icon
                 name={item.icon}
