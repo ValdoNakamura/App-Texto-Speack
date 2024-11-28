@@ -76,6 +76,7 @@ const singUp = async () => {
 
     return (
         <View style={styles.container}>
+            <Text style={styles.title}>ANS</Text>
             <TextInput
                 value={email}
                 style={styles.input}
@@ -137,6 +138,10 @@ const styles = StyleSheet.create({
     textBtnLogin: {
         fontSize: 20,
         color: '#fff'
+    },
+    title: {
+        fontSize: 50,
+        fontWeight: 'bold'
     },
     error: {
         color: 'red',

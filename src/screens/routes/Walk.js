@@ -1,6 +1,5 @@
 import { Text, View, Pressable, StyleSheet } from "react-native";
 import { useState, useEffect } from "react";
-import * as Location from 'expo-location';
 import * as Speech from 'expo-speech';
 import { FireBase_DB } from '../../../data/FirebaseConfig';
 import { getDocs, collection, query, orderBy } from 'firebase/firestore';
@@ -11,7 +10,6 @@ import ButtomBottom from "../../components/ButtonBottom";
 
 export default function Walk(props) {
     const [steps, setSteps] = useState([]);
-    const [nextDistance, setNextDistance] = useState(null);
     const [currentStepIndex, setCurrentStepIndex] = useState(0);
     const [isSpeaking, setIsSpeaking] = useState(false);
     const [hasEnded, setHasEnded] = useState(false);
@@ -34,10 +32,31 @@ export default function Walk(props) {
                     const querySnapshot = await getDocs(pasosQuery);
                     const stepsData = [];
                     querySnapshot.forEach((doc) => {
-                        const { description, latitude, longitude } = doc.data();
-                        stepsData.push({ description, latitude, longitude });
+                        const { description } = doc.data();
+                        stepsData.push({ description });
                     });
-                    setSteps(stepsData);
+
+                    const groupedSteps = [];
+                    let count = 1;
+                    for (let i = 0; i < stepsData.length; i++) {
+                        if (
+                            i < stepsData.length - 1 &&
+                            stepsData[i].description === stepsData[i + 1].description &&
+                            stepsData[i].description === "linea recta"
+                        ) {
+                            count++;
+                        } else {
+                            groupedSteps.push({
+                                description:
+                                    count > 1
+                                        ? `Camina ${count} pasos en línea recta`
+                                        : stepsData[i].description
+                            });
+                            count = 1;
+                        }
+                    }
+
+                    setSteps(groupedSteps);
                 } catch (error) {
                     console.log("Error al obtener los pasos: ", error);
                 }
@@ -97,10 +116,10 @@ export default function Walk(props) {
                 </Text>
             </Pressable>
 
-            <ButtomBottom title='Regresar' onPress={()=>{
+            <ButtomBottom title='Regresar' onPress={() => {
                 stopSpeaking();
                 props.navigation.goBack();
-                }}/>
+            }} />
         </View>
     );
 }

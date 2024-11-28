@@ -10,7 +10,7 @@ import TabButton from '../components/TabButton';
 
 const Material = createMaterialTopTabNavigator();
 
-export default function TabNavigate({ navigation }) {
+export default function TabNavigate() {
     const tabs = [
         { id: 1, title: 'Home', screen: 'Home', icon: 'home', Component: HomeScreen },
         { id: 2, title: 'Tus Rutas', screen: 'ExploradorDeRutas', icon: 'footsteps', Component: StackRouteExplorer },
@@ -45,15 +45,16 @@ export default function TabNavigate({ navigation }) {
                 tabBarItemStyle: { height: 140 }
             })}
         >
-            {tabs.map((item) => (
+            {tabs.map((item, index) => (
                 <Material.Screen
-                    key={item.id}
+                    key={index}
                     name={item.screen}
                     component={item.Component}
                     options={{
                         tabBarLabel: '',
                         tabBarIcon: ({ focused }) => (
                             <TabButton
+                                key={index}
                                 item={item}
                                 accessibilityState={{ selected: focused }}
                             />

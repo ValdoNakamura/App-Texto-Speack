@@ -68,9 +68,9 @@ export default function WriteRoute(props) {
 
             <View style={styles.containerBtns}>
                 {[
-                    { title: "Línea Recta", style: styles.btnRecta, icon: 'arrow-up-outline' },
-                    { title: "Vuelta a la izquierda", style: styles.btnIzquierda, icon: 'arrow-back-outline'},
-                    { title: "Vuelta a la derecha", style: styles.btnDerecha, icon: 'arrow-forward-outline'},
+                    { title: "linea recta", style: styles.btnRecta, icon: 'arrow-up-outline' },
+                    { title: "gira a la derecha", style: styles.btnIzquierda, icon: 'arrow-back-outline'},
+                    { title: "gira a la izquierda", style: styles.btnDerecha, icon: 'arrow-forward-outline'},
                     { title: "Dejar Precionado Para Cancelar y Presiona Para Terminar", style: styles.btnCancelar, navigate: true, cancel: true },
                 ].map((btn, index) => (
                     <Pressable
